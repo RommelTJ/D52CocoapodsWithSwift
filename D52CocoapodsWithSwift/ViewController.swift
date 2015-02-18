@@ -12,7 +12,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var myTextView: UITextView!
 
     @IBAction func doDownloadButton(sender: AnyObject) {
-        
+        myTextView.text = "Accessing the web site..."
+        let mgr = AFHTTPRequestOperationManager()
+        mgr.responseSerializer = AFHTTPResponseSerializer()
+        mgr.GET("http://www.reddit.com", parameters: nil,
+            success: { (paramA: AFHTTPRequestOperation!, paramB: AnyObject!) -> Void in
+                self.myTextView.text = ""
+            },
+            failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                self.myTextView.text = error.localizedDescription
+            })
     }
     
     override func viewDidLoad() {
